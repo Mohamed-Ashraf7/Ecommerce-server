@@ -13,19 +13,22 @@ Hello everyone in this video you will learn to deploy your db.json file on **ren
 **Step 6** - Create index.js file copy the code under blew on it 
 
 ```javaScript
-const jsonServer = require("json-server"); // importing json-server library
-const server = jsonServer.create();
+const express = require('express');
+const jsonServer = require('json-server');
 const auth = require('json-server-auth');
-const router = jsonServer.router("db.json");
+
+const app = express();
+const router = jsonServer.router('data.json');
 const middlewares = jsonServer.defaults();
 
-server.use(middlewares);
-server.db = router.db;
-server.use(auth);
-server.use(router);
+app.use(middlewares);
+app.use(auth);
+app.use(router);
 
-server.listen(3001, () => {
-  console.log('JSON Server is running');
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log(`JSON Server is running on port ${PORT}`);
 });
 
 ```
