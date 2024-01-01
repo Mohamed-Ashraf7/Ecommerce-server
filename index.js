@@ -1,15 +1,17 @@
+const express = require('express');
 const jsonServer = require('json-server');
 const auth = require('json-server-auth');
-const server = jsonServer.create();
-const router = jsonServer.router('data.json');
+
+const app = express();
+const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
-const PORT = 3001;
 
-server.use(middlewares);
-server.db = router.db;
-server.use(auth);
-server.use(router);
+app.use(middlewares);
+app.use(auth);
+app.use(router);
 
-server.listen(PORT, () => {
-  console.log(`JSON Server is running: ${PORT}`);
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log(`JSON Server is running on port ${PORT}`);
 });
